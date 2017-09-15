@@ -2,9 +2,11 @@ package com.dragon.MvnJdbcSql;
 
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import org.junit.Test;
 
+import com.dragon.utils.PropertiesUtils;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Driver;
 import com.mysql.jdbc.PreparedStatement;
@@ -43,4 +45,16 @@ public void readDataFromSqlByJdbc() throws Exception{
 	statement.close();
 	conn.close();
 }
+@Test
+	public void testProperties() throws Exception {
+		Connection connection = (Connection) PropertiesUtils.getConnection();
+		String sql = "select * from category";
+		PreparedStatement statement = (PreparedStatement) connection.prepareStatement(sql);
+		ResultSet rSet = statement.executeQuery();
+		while (rSet.next()) {
+			System.out.println(rSet.getString("cid")+":>"+rSet.getString("cname"));
+
+		}
+		
+	}
 }
